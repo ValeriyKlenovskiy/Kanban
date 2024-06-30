@@ -28,3 +28,8 @@ async def delete_board(board_id: int):
     await BoardsDAO.delete(board_id)
     return HTTPException(status_code=status.HTTP_204_NO_CONTENT)
 
+
+@router.patch('/edit_ordering')
+async def edit_ordering(board_id: int, ordering: list[int]):
+    return await BoardsDAO.change_ordering(board_id, ordering)
+

@@ -34,3 +34,9 @@ async def delete_space(space_id: int):
 @router.patch('/edit_allowed')
 async def edit_allowed(space_id: int, allowed_users: list[int]):
     return await SpacesDAO.edit_allowed_users(space_id, allowed_users)
+
+
+@router.patch('/edit_ordering')
+async def edit_ordering(space_id: int, ordering: list[int]):
+    return await SpacesDAO.change_ordering(space_id, ordering)
+
