@@ -11,7 +11,6 @@ class SCardsUpdate(BaseModel):
     creator: int
     date_added: date
     labels: list[int]
-    ordering: int
 
 
 class SCards(SCardsUpdate):

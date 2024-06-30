@@ -56,3 +56,10 @@ class BaseDAO:
                 return res.mappings().one_or_none()
             else:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
+    @classmethod
+    async def change_ordering(cls, model_id: int, ordering: list[int]):
+        async with (async_session_maker() as session):
+            query = update(cls.model).filter_by(id=model_id).values(ordering=ordering)
+            await session.execute(query)
+            await session.commit()

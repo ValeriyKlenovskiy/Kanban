@@ -15,4 +15,3 @@ class Cards(Base):
     creator: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     date_added: Mapped[date] = mapped_column(nullable=False)
     labels: Mapped[list[int]] = mapped_column(JSON)
-    ordering: Mapped[int]

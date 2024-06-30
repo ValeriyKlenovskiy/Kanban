@@ -8,8 +8,8 @@ from app.users.router import router as users_router
 
 app = FastAPI()
 
-app.include_router(boards_router)
-app.include_router(cards_router)
-app.include_router(lists_router)
-app.include_router(spaces_router)
 app.include_router(users_router)
+app.include_router(spaces_router)
+app.include_router(boards_router)
+app.include_router(lists_router)
+app.include_router(cards_router)

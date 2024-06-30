@@ -8,5 +8,3 @@ class SUsersUpdate(BaseModel):
 
 class SUsers(SUsersUpdate):
     id: int
-
-

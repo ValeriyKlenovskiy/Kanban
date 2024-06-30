@@ -29,3 +29,8 @@ async def update_list(list_id: int, list_data: SListsUpdate):
 async def delete_list(list_id: int):
     await ListsDAO.delete(list_id)
     return HTTPException(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.patch('/edit_ordering')
+async def edit_ordering(list_id: int, ordering: list[int]):
+    return await ListsDAO.change_ordering(list_id, ordering)

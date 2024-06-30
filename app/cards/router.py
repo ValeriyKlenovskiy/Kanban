@@ -15,14 +15,14 @@ async def get_cards():
 async def add_card(card_data: SCards):
     return await CardsDAO.add_one(id=card_data.id, title=card_data.title, list_id=card_data.list_id,
                                   description=card_data.description, creator=card_data.creator,
-                                  date_added=card_data.date_added, labels=card_data.labels, ordering=card_data.ordering)
+                                  date_added=card_data.date_added, labels=card_data.labels)
 
 
 @router.put("/{card_id}")
 async def update_card(card_id: int, card_data: SCardsUpdate):
     return await CardsDAO.update(model_id=card_id, title=card_data.title, list_id=card_data.list_id,
                                  description=card_data.description, creator=card_data.creator,
-                                 date_added=card_data.date_added, labels=card_data.labels, ordering=card_data.ordering)
+                                 date_added=card_data.date_added, labels=card_data.labels)
 
 
 @router.delete("/{card_id}")
