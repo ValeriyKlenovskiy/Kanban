@@ -1,4 +1,4 @@
-from app.dao.base import BaseDAO
+from app.base.dao import BaseDAO
 from app.lists.models import Lists
 
 

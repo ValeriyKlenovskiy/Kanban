@@ -1,4 +1,4 @@
-from app.dao.base import BaseDAO
+from app.base.dao import BaseDAO
 from app.spaces.models import Spaces
 from app.database import async_session_maker
 from sqlalchemy import update
