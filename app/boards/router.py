@@ -13,7 +13,7 @@ async def get_boards():
 
 @router.post("")
 async def add_board(board_data: SBoards):
-    return await BoardsDAO.add_one(id=board_data.id, title=board_data.title, space_id=board_data.space_id,
+    return await BoardsDAO.add_one(title=board_data.title, space_id=board_data.space_id,
                                    ordering=board_data.ordering)
 
 

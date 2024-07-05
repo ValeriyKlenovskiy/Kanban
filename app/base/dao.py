@@ -7,9 +7,9 @@ class BaseDAO:
     model = None
 
     @classmethod
-    async def find_all(cls, **filter_by):
+    async def find_all(cls):
         async with (async_session_maker() as session):
-            query = select(cls.model.__table__.columns).filter_by(**filter_by)
+            query = select(cls.model.__table__.columns)
             res = await session.execute(query)
             return res.mappings().all()
 
@@ -48,7 +48,7 @@ class BaseDAO:
             existing = await session.execute(check)
             res_existing = existing.mappings().one_or_none()
             if res_existing:
-                query = update(cls.model).values(**model_data)
+                query = update(cls.model).values(**model_data).filter_by(id=model_id)
                 await session.execute(query)
                 await session.commit()
                 updated = select(cls.model.__table__.columns).filter_by(id=model_id)

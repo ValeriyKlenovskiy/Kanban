@@ -13,7 +13,7 @@ async def get_cards():
 
 @router.post("")
 async def add_card(card_data: SCards):
-    return await CardsDAO.add_one(id=card_data.id, title=card_data.title, list_id=card_data.list_id,
+    return await CardsDAO.add_one(title=card_data.title, list_id=card_data.list_id,
                                   description=card_data.description, creator=card_data.creator,
                                   date_added=card_data.date_added, labels=card_data.labels)
 

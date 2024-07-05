@@ -6,5 +6,9 @@ class SUsersUpdate(BaseModel):
     password: str
 
 
+class SUsersAuth(SUsersUpdate):
+    pass
+
+
 class SUsers(SUsersUpdate):
     id: int

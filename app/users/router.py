@@ -2,7 +2,7 @@ import sqlalchemy
 from fastapi import APIRouter, HTTPException, status, Response
 
 from app.users.dao import UsersDAO
-from app.users.schemas import SUsers
+from app.users.schemas import SUsers, SUsersAuth
 from app.users.auth import get_password_hash, authenticate_user, create_access_token
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -30,7 +30,7 @@ async def delete_user(user_id: int):
 
 
 @router.post('/register')
-async def register_user(user_data: SUsers):
+async def register_user(user_data: SUsersAuth):
     try:
         existing_user = await UsersDAO.find_one_or_none(email=user_data.email)
     except sqlalchemy.exc.MultipleResultsFound:
@@ -42,7 +42,7 @@ async def register_user(user_data: SUsers):
 
 
 @router.post('/login')
-async def login_user(response: Response, user_data: SUsers):
+async def login_user(response: Response, user_data: SUsersAuth):
     user = await authenticate_user(user_data.email, user_data.password)
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
