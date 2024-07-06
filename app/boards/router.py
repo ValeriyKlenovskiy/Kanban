@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 
 from app.boards.dao import BoardsDAO
-from app.boards.schemas import SBoards, SBoardsUpdate
+from app.boards.schemas import SBoards
 
 router = APIRouter(prefix="/boards", tags=["boards"])
 
@@ -18,7 +18,7 @@ async def add_board(board_data: SBoards):
 
 
 @router.put("/{board_id}")
-async def update_board(board_id: int, board_data: SBoardsUpdate):
+async def update_board(board_id: int, board_data: SBoards):
     return await BoardsDAO.update(model_id=board_id, title=board_data.title, space_id=board_data.space_id,
                                   ordering=board_data.ordering)
 

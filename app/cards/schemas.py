@@ -3,15 +3,16 @@ from datetime import date
 from pydantic import BaseModel
 
 
-class SCardsUpdate(BaseModel):
-    id: int
+# class Labels(Enum):
+#     High = 'High'
+#     Middle = 'Middle'
+#     Low = 'Low'
+
+
+class SCards(BaseModel):
     title: str
     list_id: int
     description: str
     creator: int
     date_added: date
-    labels: list[int]
-
-
-class SCards(SCardsUpdate):
-    id: int
+    labels: str

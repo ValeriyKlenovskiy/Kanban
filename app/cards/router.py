@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 
 from app.cards.dao import CardsDAO
-from app.cards.schemas import SCards, SCardsUpdate
+from app.cards.schemas import SCards
 
 router = APIRouter(prefix="/cards", tags=["cards"])
 
@@ -19,7 +19,7 @@ async def add_card(card_data: SCards):
 
 
 @router.put("/{card_id}")
-async def update_card(card_id: int, card_data: SCardsUpdate):
+async def update_card(card_id: int, card_data: SCards):
     return await CardsDAO.update(model_id=card_id, title=card_data.title, list_id=card_data.list_id,
                                  description=card_data.description, creator=card_data.creator,
                                  date_added=card_data.date_added, labels=card_data.labels)
