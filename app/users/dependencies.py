@@ -9,9 +9,9 @@ from app.users.dao import UsersDAO
 
 
 def get_token(request: Request):
-    token = request.cookies.get("booking_access_token")
+    token = request.cookies.get("kanban_access_token")
     if not token:
-        raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE)
+        raise HTTPException(status_code=status.HTTP_407_PROXY_AUTHENTICATION_REQUIRED)
     return token
 
 

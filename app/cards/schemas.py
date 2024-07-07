@@ -13,6 +13,6 @@ class SCards(BaseModel):
     title: str
     list_id: int
     description: str
-    creator: int
     date_added: date
     labels: str
+

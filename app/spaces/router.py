@@ -1,7 +1,9 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends
 
 from app.spaces.dao import SpacesDAO
 from app.spaces.schemas import SSpaces
+from app.users.dependencies import get_current_user
+from app.users.models import Users
 
 router = APIRouter(prefix="/spaces", tags=["spaces"])
 
@@ -12,16 +14,16 @@ async def get_spaces():
 
 
 @router.post("")
-async def add_space(space_data: SSpaces):
+async def add_space(space_data: SSpaces, user: Users = Depends(get_current_user)):
     return await SpacesDAO.add_one(title=space_data.title,
-                                   owner_id=space_data.owner_id, allowed_users=space_data.allowed_users,
+                                   owner_id=user.id, allowed_users=[user.id],
                                    ordering=space_data.ordering)
 
 
 @router.put("/{space_id}")
 async def update_space(space_id: int, space_data: SSpaces):
     return await SpacesDAO.update(model_id=space_id, title=space_data.title,
-                                  owner_id=space_data.owner_id, allowed_users=space_data.allowed_users,
+                                  allowed_users=space_data.allowed_users,
                                   ordering=space_data.ordering)
 
 

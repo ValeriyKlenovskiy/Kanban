@@ -1,7 +1,9 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends
 
 from app.lists.dao import ListsDAO
 from app.lists.schemas import SLists
+from app.users.dependencies import get_current_user
+from app.users.models import Users
 
 router = APIRouter(prefix="/lists", tags=["lists"])
 
@@ -12,16 +14,16 @@ async def get_lists():
 
 
 @router.post("")
-async def add_list(list_data: SLists):
+async def add_list(list_data: SLists, user: Users = Depends(get_current_user)):
     return await ListsDAO.add_one(title=list_data.title, board_id=list_data.board_id,
-                                  description=list_data.description, creator=list_data.creator,
+                                  description=list_data.description, creator=user.id,
                                   date_added=list_data.date_added, ordering=list_data.ordering)
 
 
 @router.put("/{list_id}")
 async def update_list(list_id: int, list_data: SLists):
     return await ListsDAO.update(model_id=list_id, title=list_data.title, board_id=list_data.board_id,
-                                 description=list_data.description, creator=list_data.creator,
+                                 description=list_data.description,
                                  date_added=list_data.date_added, ordering=list_data.ordering)
 
 
