@@ -14,8 +14,8 @@ services:
   db:
     image: postgres:15
     container_name: kanban_db
-    volumes:
-      - postgresdata:/var/lib/postgresql/data
+#    volumes:
+#      - postgresdata:/var/lib/postgresql/data
     env_file:
       - .env-doc
     ports:
@@ -35,5 +35,5 @@ services:
     ports:
       - 8000:8000
 
-volumes:
-  postgresdata:
+#volumes:
+#  postgresdata:
