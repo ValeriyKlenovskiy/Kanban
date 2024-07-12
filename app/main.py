@@ -15,10 +15,21 @@ app.include_router(boards_router)
 app.include_router(lists_router)
 app.include_router(cards_router)
 
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/")
+async def main():
+    return {"message": "Hello World"}
