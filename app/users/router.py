@@ -1,4 +1,4 @@
-import sqlalchemy
+from http import cookies
 from fastapi import APIRouter, HTTPException, status, Response
 
 from app.users.dao import UsersDAO
@@ -31,7 +31,7 @@ async def login_user(response: Response, user_data: SUsersAuth):
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     access_token = create_access_token({"sub": str(user.id)})
-    response.set_cookie("kanban_access_token", access_token, httponly=True)
+    response.set_cookie("kanban_access_token", value=access_token, samesite='none', httponly=True)
     return access_token
 
 
