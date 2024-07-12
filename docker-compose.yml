@@ -14,12 +14,18 @@ services:
   db:
     image: postgres:15
     container_name: kanban_db
-#    volumes:
-#      - postgresdata:/var/lib/postgresql/data
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
     env_file:
       - .env-doc
     ports:
       - 5432:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d kanban_db" ]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
 
 
   kanban:
@@ -29,11 +35,11 @@ services:
     env_file:
       - .env-doc
     depends_on:
-      - db
-
+      db:
+        condition: service_healthy
     command: sh -c "alembic upgrade head && gunicorn app.main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000"
     ports:
       - 8000:8000
 
-#volumes:
-#  postgresdata:
+volumes:
+ postgresdata:
