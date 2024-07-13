@@ -1,4 +1,4 @@
-from sqlalchemy import select, insert, delete, update
+from sqlalchemy import select, insert, delete, update, desc
 from fastapi import HTTPException, status
 from app.database import async_session_maker
 
@@ -12,6 +12,20 @@ class BaseDAO:
             query = select(cls.model.__table__.columns)
             res = await session.execute(query)
             return res.mappings().all()
+
+    @classmethod
+    async def find_filtered(cls, **filter_by):
+        async with (async_session_maker() as session):
+            query = select(cls.model.__table__.columns).filter_by(**filter_by)
+            res = await session.execute(query)
+            return res.mappings().all()
+
+    @classmethod
+    async def find_first(cls):
+        async with (async_session_maker() as session):
+            query = select(cls.model.__table__.columns).order_by(desc(cls.model.id))
+            res = await session.execute(query)
+            return res.mappings().first()
 
     @classmethod
     async def find_by_id(cls, model_id: int):
@@ -33,6 +47,7 @@ class BaseDAO:
             query = insert(cls.model).values(**data)
             await session.execute(query)
             await session.commit()
+            return await cls.find_first()
 
     @classmethod
     async def delete(cls, model_id: int):

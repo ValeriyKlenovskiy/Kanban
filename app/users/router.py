@@ -27,15 +27,16 @@ async def register_user(user_data: SUsersAuth):
 
 @router.post('/login')
 async def login_user(response: Response, user_data: SUsersAuth):
+    response.delete_cookie("kanban_access_token")
     user = await authenticate_user(user_data.email, user_data.password)
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     access_token = create_access_token({"sub": str(user.id)})
-    response.set_cookie("kanban_access_token", value=access_token, httponly=True)
+    response.set_cookie("kanban_access_token", access_token)
     return access_token
 
 
 @router.post("/logout")
 async def logout_user(response: Response):
     response.delete_cookie("kanban_access_token")
-    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+    return 'logout'

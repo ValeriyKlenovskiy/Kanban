@@ -1,9 +1,11 @@
+import sqlalchemy
 from fastapi import APIRouter, HTTPException, status, Depends
 
 from app.cards.dao import CardsDAO
 from app.cards.schemas import SCards
 from app.users.dependencies import get_current_user
 from app.users.models import Users
+from app.exceptions import NoList
 
 router = APIRouter(prefix="/cards", tags=["cards"])
 
@@ -15,9 +17,12 @@ async def get_cards():
 
 @router.post("")
 async def add_card(card_data: SCards, user: Users = Depends(get_current_user)):
-    return await CardsDAO.add_one(title=card_data.title, list_id=card_data.list_id,
-                                  description=card_data.description, creator=user.id,
-                                  date_added=card_data.date_added, labels=card_data.labels)
+    try:
+        return await CardsDAO.add_one(title=card_data.title, list_id=card_data.list_id,
+                                      description=card_data.description, creator=user.id,
+                                      date_added=card_data.date_added, labels=card_data.labels)
+    except sqlalchemy.exc.IntegrityError:
+        raise NoList
 
 
 @router.put("/{card_id}")

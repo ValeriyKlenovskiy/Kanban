@@ -11,39 +11,54 @@ class KanbanException(HTTPException):
 
 class UserAlreadyExists(KanbanException):
     status_code = status.HTTP_409_CONFLICT
-    detail = "Пользователь уже существует"
+    detail = "User Already Exists"
 
 
 class IncorrectEmailOrPassword(KanbanException):
     status_code = status.HTTP_401_UNAUTHORIZED
-    detail = "Неверный логин или пороль"
+    detail = "Incorrect Email Or Password"
 
 
 class NotAllowed(KanbanException):
     status_code = status.HTTP_403_FORBIDDEN
-    detail = "Не разрешено"
+    detail = "Not Allowed"
 
 
 class TokenExpired(KanbanException):
     status_code = status.HTTP_401_UNAUTHORIZED
-    detail = "Токен истек"
+    detail = "Token Expired"
 
 
 class TokenAbsent(KanbanException):
     status_code = status.HTTP_401_UNAUTHORIZED
-    detail = "Токен отсутствует"
+    detail = "Token Absent"
 
 
 class IncorrectTokenFormat(KanbanException):
     status_code = status.HTTP_401_UNAUTHORIZED
-    detail = "Неверный формат токена"
+    detail = "Incorrect Token Format"
 
 
 class UserAbsent(KanbanException):
     status_code = status.HTTP_401_UNAUTHORIZED
-    detail = "Нет пользователя"
+    detail = "User Absent"
 
 
 class CannotAddDataToDatabase(KanbanException):
     status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
-    detail = "Не удалось добавить запись"
+    detail = "Can not Add Data To Database"
+
+
+class NoSpace(KanbanException):
+    status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+    detail = "No Space with this id"
+
+
+class NoBoard(KanbanException):
+    status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+    detail = "No Board with this id"
+
+
+class NoList(KanbanException):
+    status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+    detail = "No List with this id"

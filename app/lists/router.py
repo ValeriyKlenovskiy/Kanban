@@ -1,9 +1,11 @@
+import sqlalchemy
 from fastapi import APIRouter, HTTPException, status, Depends
 
 from app.lists.dao import ListsDAO
 from app.lists.schemas import SLists
 from app.users.dependencies import get_current_user
 from app.users.models import Users
+from app.exceptions import NoBoard
 
 router = APIRouter(prefix="/lists", tags=["lists"])
 
@@ -15,9 +17,12 @@ async def get_lists():
 
 @router.post("")
 async def add_list(list_data: SLists, user: Users = Depends(get_current_user)):
-    return await ListsDAO.add_one(title=list_data.title, board_id=list_data.board_id,
-                                  description=list_data.description, creator=user.id,
-                                  date_added=list_data.date_added, ordering=list_data.ordering)
+    try:
+        return await ListsDAO.add_one(title=list_data.title, board_id=list_data.board_id,
+                                      description=list_data.description, creator=user.id,
+                                      date_added=list_data.date_added, ordering=[0])
+    except sqlalchemy.exc.IntegrityError:
+        raise NoBoard
 
 
 @router.put("/{list_id}")

@@ -13,11 +13,16 @@ async def get_spaces():
     return await SpacesDAO.find_all()
 
 
+@router.get("/my_spaces")
+async def get_my_spaces(user: Users = Depends(get_current_user)):
+    return await SpacesDAO.find_filtered(owner_id=user.id)
+
+
 @router.post("")
 async def add_space(space_data: SSpaces, user: Users = Depends(get_current_user)):
     return await SpacesDAO.add_one(title=space_data.title,
                                    owner_id=user.id, allowed_users=[user.id],
-                                   ordering=space_data.ordering)
+                                   ordering=[0])
 
 
 @router.put("/{space_id}")

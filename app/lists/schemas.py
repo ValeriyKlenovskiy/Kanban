@@ -8,4 +8,3 @@ class SLists(BaseModel):
     board_id: int
     description: str
     date_added: date
-    ordering: list[int]

@@ -1,7 +1,9 @@
+import sqlalchemy
 from fastapi import APIRouter, HTTPException, status
 
 from app.boards.dao import BoardsDAO
 from app.boards.schemas import SBoards
+from app.exceptions import NoSpace
 
 router = APIRouter(prefix="/boards", tags=["boards"])
 
@@ -13,8 +15,11 @@ async def get_boards():
 
 @router.post("")
 async def add_board(board_data: SBoards):
-    return await BoardsDAO.add_one(title=board_data.title, space_id=board_data.space_id,
-                                   ordering=board_data.ordering)
+    try:
+        return await BoardsDAO.add_one(title=board_data.title, space_id=board_data.space_id,
+                                   ordering=[0])
+    except sqlalchemy.exc.IntegrityError:
+        raise NoSpace
 
 
 @router.put("/{board_id}")
