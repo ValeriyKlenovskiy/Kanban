@@ -38,9 +38,19 @@ async def delete_space(space_id: int):
     return HTTPException(status_code=status.HTTP_204_NO_CONTENT)
 
 
-@router.patch('/edit_allowed')
-async def edit_allowed(space_id: int, allowed_users: list[int]):
-    return await SpacesDAO.edit_allowed_users(space_id, allowed_users)
+@router.get('/get_allowed')
+async def get_allowed(space_id: int):
+    return await SpacesDAO.get_allowed_users(space_id)
+
+
+@router.patch('/add_allowed')
+async def add_allowed(space_id: int, user: int):
+    return await SpacesDAO.add_allowed_user(space_id, user)
+
+
+@router.patch('/delete_allowed')
+async def delete_allowed(space_id: int, user: int):
+    return await SpacesDAO.delete_allowed_user(space_id, user)
 
 
 @router.patch('/edit_ordering')

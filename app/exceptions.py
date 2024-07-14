@@ -62,3 +62,13 @@ class NoBoard(KanbanException):
 class NoList(KanbanException):
     status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
     detail = "No List with this id"
+
+
+class AlreadyInAllowed(KanbanException):
+    status_code = status.HTTP_409_CONFLICT
+    detail = "Already In Allowed"
+
+
+class NotInAllowed(KanbanException):
+    status_code = status.HTTP_409_CONFLICT
+    detail = "Not In Allowed"
