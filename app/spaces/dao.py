@@ -10,10 +10,18 @@ class SpacesDAO(BaseDAO):
     model = Spaces
 
     @classmethod
-    async def get_allowed_users(cls, space_id):
+    async def rename(cls, space_id, new_title, current_user):
         async with (async_session_maker() as session):
-            select_query = select(cls.model.__table__.columns).filter_by(id=space_id)
-            res = await session.execute(select_query)
+            query = update(cls.model).filter_by(id=space_id, owner_id=current_user).values(title=new_title)
+            await session.execute(query)
+            await session.commit()
+            return await cls.find_by_id(space_id)
+
+    @classmethod
+    async def get_allowed_users(cls, space_id, current_user):
+        async with (async_session_maker() as session):
+            query = select(cls.model.__table__.columns).filter_by(id=space_id, owner_id=current_user.id)
+            res = await session.execute(query)
             return res.mappings().first().allowed_users
 
     @classmethod
