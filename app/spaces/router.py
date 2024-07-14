@@ -39,16 +39,14 @@ async def get_allowed(space_id: int, current_user: Users = Depends(get_current_u
 
 @router.patch('/add_allowed')
 async def add_allowed(space_id: int, user: int, current_user: Users = Depends(get_current_user)):
-    if user == current_user.id:
-        raise NotAllowed
-    return await SpacesDAO.add_allowed_user(space_id, user)
+    return await SpacesDAO.add_allowed_user(space_id, user, current_user)
 
 
 @router.patch('/delete_allowed')
 async def delete_allowed(space_id: int, user: int, current_user: Users = Depends(get_current_user)):
     if user == current_user.id:
         raise NotAllowed
-    return await SpacesDAO.delete_allowed_user(space_id, user)
+    return await SpacesDAO.delete_allowed_user(space_id, user, current_user)
 
 
 @router.patch('/edit_ordering')

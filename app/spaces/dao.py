@@ -25,9 +25,9 @@ class SpacesDAO(BaseDAO):
             return res.mappings().first().allowed_users
 
     @classmethod
-    async def add_allowed_user(cls, space_id, user_id):
+    async def add_allowed_user(cls, space_id, user_id, current_user):
         async with (async_session_maker() as session):
-            allowed_users = await cls.get_allowed_users(space_id)
+            allowed_users = await cls.get_allowed_users(space_id, current_user)
             if user_id not in allowed_users:
                 allowed_users.append(user_id)
             else:
@@ -38,9 +38,9 @@ class SpacesDAO(BaseDAO):
             return allowed_users
 
     @classmethod
-    async def delete_allowed_user(cls, space_id, user_id):
+    async def delete_allowed_user(cls, space_id, user_id, current_user):
         async with (async_session_maker() as session):
-            allowed_users = await cls.get_allowed_users(space_id)
+            allowed_users = await cls.get_allowed_users(space_id, current_user)
             if user_id in allowed_users:
                 allowed_users.remove(user_id)
             else:
