@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
 
-class SBoards(BaseModel):
+class SBackgrounds(BaseModel):
     title: str
-    space_id: int
+    image_id: int

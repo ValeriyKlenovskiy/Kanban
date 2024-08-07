@@ -9,5 +9,4 @@ class Backgrounds(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(nullable=False)
-    owner_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
-    # image: Mapped[] =
+    image_id: Mapped[int] = mapped_column(nullable=False)
