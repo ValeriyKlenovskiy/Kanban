@@ -20,7 +20,8 @@ async def add_card(card_data: SCards, user: Users = Depends(get_current_user)):
     try:
         return await CardsDAO.add_one(title=card_data.title, list_id=card_data.list_id,
                                       description=card_data.description, creator=user.id,
-                                      date_added=card_data.date_added, labels=card_data.labels)
+                                      date_added=card_data.date_added, labels=card_data.labels,
+                                      deadline=card_data.deadine,)
     except sqlalchemy.exc.IntegrityError:
         raise NoList
 
@@ -29,7 +30,8 @@ async def add_card(card_data: SCards, user: Users = Depends(get_current_user)):
 async def update_card(card_id: int, card_data: SCards):
     return await CardsDAO.update(model_id=card_id, title=card_data.title, list_id=card_data.list_id,
                                  description=card_data.description,
-                                 date_added=card_data.date_added, labels=card_data.labels)
+                                 date_added=card_data.date_added, labels=card_data.labels,
+                                 deadline=card_data.deadine,)
 
 
 @router.delete("/{card_id}")

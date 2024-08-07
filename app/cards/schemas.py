@@ -15,4 +15,5 @@ class SCards(BaseModel):
     description: str
     date_added: date
     labels: str
+    deadline: date
 

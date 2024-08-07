@@ -16,3 +16,4 @@ class Cards(Base):
     creator: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     date_added: Mapped[date] = mapped_column(nullable=False)
     labels: Mapped[str] = mapped_column(nullable=True)
+    deadline: Mapped[date] = mapped_column(nullable=False)
