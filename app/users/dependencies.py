@@ -4,15 +4,13 @@ from jose import JWTError, jwt, ExpiredSignatureError
 from app.config import settings
 
 from app.users.dao import UsersDAO
-from app.exceptions import TokenAbsent, TokenExpired, \
-    IncorrectTokenFormat, UserAbsent
+from app.exceptions import TokenAbsent, TokenExpired, IncorrectTokenFormat, UserAbsent
 
 
 def get_token(request: Request):
     headers = request.headers
-    print(headers)
-    if headers.get('origin') == 'http://localhost:3000':
-        token = headers.get('authorization')
+    if headers.get("origin") == "http://localhost:3000":
+        token = headers.get("authorization")
     else:
         token = request.cookies.get("kanban_access_token")
     if not token:
@@ -35,6 +33,7 @@ async def get_current_user(token: str = Depends(get_token)):
         raise UserAbsent
 
     return user
+
 
 # async def get_current_admin_user(user: Users = Depends(get_current_user)):
 #     if user.role != 'admin':
