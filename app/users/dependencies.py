@@ -9,10 +9,10 @@ from app.exceptions import TokenAbsent, TokenExpired, IncorrectTokenFormat, User
 
 def get_token(request: Request):
     headers = request.headers
-    # if headers.get("origin") == "http://localhost:3000":
-    #     token = headers.get("authorization")
-    # else:
-    token = request.cookies.get("kanban_access_token")
+    if headers.get("origin") == "http://localhost:3000":
+        token = headers.get("authorization")
+    else:
+        token = request.cookies.get("kanban_access_token")
     if not token:
         raise TokenAbsent
     return token

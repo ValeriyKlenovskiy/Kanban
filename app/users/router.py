@@ -1,8 +1,9 @@
-from http import cookies
-from fastapi import APIRouter, HTTPException, status, Response
+from fastapi import APIRouter, HTTPException, status, Response, Depends
 
 from app.users.dao import UsersDAO
-from app.users.schemas import SUsersAuth
+from app.users.models import Users
+from app.users.dependencies import get_current_user
+from app.users.schemas import SUsersGet, SUsersAuth
 from app.users.auth import get_password_hash, authenticate_user, create_access_token
 from app.exceptions import UserAlreadyExists, CannotAddDataToDatabase
 
@@ -10,8 +11,13 @@ router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.get("")
-async def get_users():
+async def get_users() -> list[SUsersGet]:
     return await UsersDAO.find_all()
+
+
+@router.get("/me")
+async def get_user(user: Users = Depends(get_current_user)) -> SUsersGet:
+    return await UsersDAO.find_by_id(user.id)
 
 
 @router.post('/register')
@@ -20,7 +26,8 @@ async def register_user(user_data: SUsersAuth):
     if existing_user:
         raise UserAlreadyExists
     hashed_password = get_password_hash(user_data.password)
-    new_user = await UsersDAO.add_one(email=user_data.email, hashed_password=hashed_password)
+    new_user = await UsersDAO.add_one(email=user_data.email, hashed_password=hashed_password, is_active=True,
+                                      is_superuser=False, is_verified=False)
     if not new_user:
         raise CannotAddDataToDatabase
 
