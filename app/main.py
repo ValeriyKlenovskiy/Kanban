@@ -6,6 +6,7 @@ from app.cards.router import router as cards_router
 from app.lists.router import router as lists_router
 from app.spaces.router import router as spaces_router
 from app.users.router import router as users_router
+from app.images.router import router as images_router
 
 app = FastAPI()
 
