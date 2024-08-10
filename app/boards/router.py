@@ -17,7 +17,7 @@ async def get_boards():
 async def add_board(board_data: SBoards):
     try:
         return await BoardsDAO.add_one(title=board_data.title, space_id=board_data.space_id,
-                                   ordering=[0])
+                                       ordering=[0])
     except sqlalchemy.exc.IntegrityError:
         raise NoSpace
 
