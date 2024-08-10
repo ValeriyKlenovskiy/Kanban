@@ -1,4 +1,6 @@
-from fastapi import APIRouter, HTTPException, status
+import shutil
+
+from fastapi import APIRouter, HTTPException, status, UploadFile
 
 from app.backgrounds.dao import BackgroundsDAO
 from app.backgrounds.schemas import SBackgrounds
@@ -12,15 +14,18 @@ async def get_backgrounds():
 
 
 @router.get("/{bg_id}")
-async def get_backgrounds_by_id(bg_id: int):
+async def get_background_by_id(bg_id: int):
     return await BackgroundsDAO.find_by_id(bg_id)
 
 
 @router.post("")
-async def add_backgrounds(background_data: SBackgrounds):
+async def add_background(title: str, file: UploadFile):
+    im_path = f"app/static/images/{title}.webp"
+    with open(im_path, "wb+") as file_object:
+        shutil.copyfileobj(file.file, file_object)
     return await BackgroundsDAO.add_one(
-        title=background_data.title,
-        image_id=background_data.image_id,
+        title=title,
+        image_path=im_path,
     )
 
 

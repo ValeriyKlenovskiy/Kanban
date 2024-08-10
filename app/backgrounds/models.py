@@ -8,4 +8,4 @@ class Backgrounds(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(nullable=False)
-    image_data: Mapped[str] = mapped_column(nullable=False)
+    image_path: Mapped[str] = mapped_column(nullable=False)
