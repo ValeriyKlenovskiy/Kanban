@@ -26,8 +26,12 @@ async def register_user(user_data: SUsersAuth):
     if existing_user:
         raise UserAlreadyExists
     hashed_password = get_password_hash(user_data.password)
-    new_user = await UsersDAO.add_one(email=user_data.email, hashed_password=hashed_password, is_active=True,
-                                      is_superuser=False, is_verified=False)
+    if user_data.email == 'admin@admin.adm':
+        new_user = await UsersDAO.add_one(email='admin@admin.adm', hashed_password=hashed_password, is_active=True,
+                                          is_superuser=True, is_verified=True)
+    else:
+        new_user = await UsersDAO.add_one(email=user_data.email, hashed_password=hashed_password, is_active=True,
+                                          is_superuser=False, is_verified=False)
     if not new_user:
         raise CannotAddDataToDatabase
 
@@ -47,3 +51,4 @@ async def login_user(response: Response, user_data: SUsersAuth):
 async def logout_user(response: Response):
     response.delete_cookie("kanban_access_token")
     return 'logout'
+

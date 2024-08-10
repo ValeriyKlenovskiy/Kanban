@@ -4,7 +4,8 @@ from jose import JWTError, jwt, ExpiredSignatureError
 from app.config import settings
 
 from app.users.dao import UsersDAO
-from app.exceptions import TokenAbsent, TokenExpired, IncorrectTokenFormat, UserAbsent
+from app.exceptions import TokenAbsent, TokenExpired, IncorrectTokenFormat, UserAbsent, NotAllowed
+from app.users.models import Users
 
 
 def get_token(request: Request):
@@ -35,7 +36,7 @@ async def get_current_user(token: str = Depends(get_token)):
     return user
 
 
-# async def get_current_admin_user(user: Users = Depends(get_current_user)):
-#     if user.role != 'admin':
-#         raise HTTPException(status_code=status.HTTP_408_REQUEST_TIMEOUT)
-#     return user
+async def get_current_superuser(user: Users = Depends(get_current_user)):
+    if not user.is_superuser:
+        raise NotAllowed
+    return user
