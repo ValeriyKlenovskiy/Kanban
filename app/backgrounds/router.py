@@ -3,7 +3,7 @@ import shutil
 from fastapi import APIRouter, HTTPException, status, UploadFile
 
 from app.backgrounds.dao import BackgroundsDAO
-from app.backgrounds.schemas import SBackgrounds
+from app.tasks.tasks import process_pic
 
 router = APIRouter(prefix="/backgrounds", tags=["backgrounds"])
 
@@ -23,6 +23,7 @@ async def add_background(title: str, file: UploadFile):
     im_path = f"app/static/images/{title}.webp"
     with open(im_path, "wb+") as file_object:
         shutil.copyfileobj(file.file, file_object)
+    process_pic.delay(im_path)
     return await BackgroundsDAO.add_one(
         title=title,
         image_path=im_path,
