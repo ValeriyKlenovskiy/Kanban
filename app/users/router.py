@@ -55,7 +55,7 @@ async def logout_user(response: Response):
 
 @router.post('/get_verify_token')
 async def get_verify_token(user: Users = Depends(get_current_user)):
-    token = create_verification_token(user.email)
+    token = create_verification_token({'email': user.email})
     return token
 
 
