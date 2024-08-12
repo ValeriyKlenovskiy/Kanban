@@ -2,9 +2,9 @@ from fastapi import APIRouter, HTTPException, status, Response, Depends
 
 from app.users.dao import UsersDAO
 from app.users.models import Users
-from app.users.dependencies import get_current_user
+from app.users.dependencies import get_current_user, create_verification_token, create_access_token
 from app.users.schemas import SUsersGet, SUsersAuth
-from app.users.auth import get_password_hash, authenticate_user, create_access_token
+from app.users.auth import get_password_hash, authenticate_user
 from app.exceptions import UserAlreadyExists, CannotAddDataToDatabase
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -52,3 +52,13 @@ async def logout_user(response: Response):
     response.delete_cookie("kanban_access_token")
     return 'logout'
 
+
+@router.post('/get_verify_token')
+async def get_verify_token(user: Users = Depends(get_current_user)):
+    token = create_verification_token(user.email)
+    return token
+
+
+@router.post('/verify')
+async def verify():
+    pass
