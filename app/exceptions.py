@@ -72,3 +72,8 @@ class AlreadyInAllowed(KanbanException):
 class NotInAllowed(KanbanException):
     status_code = status.HTTP_409_CONFLICT
     detail = "Not In Allowed"
+
+
+class NoVerificationTokenForYourEmail(KanbanException):
+    status_code = status.HTTP_409_CONFLICT
+    detail = "No Verification Token For Your Email"

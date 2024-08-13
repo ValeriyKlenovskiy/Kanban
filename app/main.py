@@ -7,9 +7,11 @@ from app.lists.router import router as lists_router
 from app.spaces.router import router as spaces_router
 from app.users.router import router as users_router
 from app.backgrounds.router import router as backgrounds_router
+from app.verification.router import router as verification_router
 
 app = FastAPI()
 
+app.include_router(verification_router)
 app.include_router(users_router)
 app.include_router(spaces_router)
 app.include_router(boards_router)
