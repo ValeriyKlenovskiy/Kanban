@@ -1,5 +1,5 @@
 from app.base.dao import BaseDAO
-from app.verification.models import Verification
+from app.users.verification.models import Verification
 
 
 class UsersDAO(BaseDAO):

@@ -5,7 +5,7 @@ from app.tasks.tasks import send_verification_email
 from app.users.dao import UsersDAO
 from app.users.dependencies import get_current_user
 from app.users.models import Users
-from app.verification.dependencies import create_verification_token
+from app.users.verification.dependencies import create_verification_token
 
 router = APIRouter(prefix="/verify", tags=["verification"])
 

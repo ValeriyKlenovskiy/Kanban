@@ -7,7 +7,7 @@ from app.lists.router import router as lists_router
 from app.spaces.router import router as spaces_router
 from app.users.router import router as users_router
 from app.backgrounds.router import router as backgrounds_router
-from app.verification.router import router as verification_router
+from app.users.verification.router import router as verification_router
 
 app = FastAPI()
 
