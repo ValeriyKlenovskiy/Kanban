@@ -34,7 +34,7 @@ async def update_list(list_id: int, list_data: SLists):
 
 @router.delete("/{list_id}")
 async def delete_list(list_id: int):
-    await ListsDAO.delete(list_id)
+    await ListsDAO.delete(id=list_id)
     return HTTPException(status_code=status.HTTP_204_NO_CONTENT)
 
 

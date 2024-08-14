@@ -46,5 +46,5 @@ async def update_card(card_id: int, card_data: SCards):
 
 @router.delete("/{card_id}")
 async def delete_card(card_id: int):
-    await CardsDAO.delete(card_id)
+    await CardsDAO.delete(id=card_id)
     return HTTPException(status_code=status.HTTP_204_NO_CONTENT)

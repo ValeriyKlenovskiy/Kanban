@@ -39,6 +39,11 @@ class IncorrectTokenFormat(KanbanException):
     detail = "Incorrect Token Format"
 
 
+class IncorrectToken(KanbanException):
+    status_code = status.HTTP_409_CONFLICT
+    detail = "Incorrect Token"
+
+
 class UserAbsent(KanbanException):
     status_code = status.HTTP_401_UNAUTHORIZED
     detail = "User Absent"
@@ -77,3 +82,8 @@ class NotInAllowed(KanbanException):
 class NoVerificationTokenForYourEmail(KanbanException):
     status_code = status.HTTP_409_CONFLICT
     detail = "No Verification Token For Your Email"
+
+
+class AlreadyVerified(KanbanException):
+    status_code = status.HTTP_409_CONFLICT
+    detail = "Already Verified"

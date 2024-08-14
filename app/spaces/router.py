@@ -28,7 +28,7 @@ async def rename_my_space(space_id: int, new_name: str, current_user: Users = De
 
 @router.delete("/{space_id}")
 async def delete_space(space_id: int):
-    await SpacesDAO.delete(space_id)
+    await SpacesDAO.delete(id=space_id)
     return HTTPException(status_code=status.HTTP_204_NO_CONTENT)
 
 

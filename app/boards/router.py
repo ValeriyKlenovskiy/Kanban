@@ -30,7 +30,7 @@ async def update_board(board_id: int, board_data: SBoards):
 
 @router.delete("/{board_id}")
 async def delete_board(board_id: int):
-    await BoardsDAO.delete(board_id)
+    await BoardsDAO.delete(id=board_id)
     return HTTPException(status_code=status.HTTP_204_NO_CONTENT)
 
 
