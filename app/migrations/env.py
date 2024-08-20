@@ -14,6 +14,7 @@ from app.users.models import Users
 from app.lists.models import Lists
 from app.spaces.models import Spaces
 from app.users.verification.models import Verification
+from app.users.password_reset.models import Reset
 from app.backgrounds.models import Backgrounds
 
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))

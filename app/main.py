@@ -8,9 +8,12 @@ from app.spaces.router import router as spaces_router
 from app.users.router import router as users_router
 from app.backgrounds.router import router as backgrounds_router
 from app.users.verification.router import router as verification_router
+from app.users.password_reset.router import router as password_reset_router
+
 
 app = FastAPI()
 
+app.include_router(password_reset_router)
 app.include_router(verification_router)
 app.include_router(users_router)
 app.include_router(spaces_router)

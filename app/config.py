@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     DB_NAME: str
 
     SECRET_VERIFICATION_KEY: str
+    SECRET_RESET_KEY: str
     SECRET_KEY: str
     ALGORITHM: str
 
