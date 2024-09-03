@@ -1,0 +1,42 @@
+[
+	{
+		"id": 11,
+		"email": "tellus.id@icloud.net",
+		"hashed_password": "$2b$12$AGNki/U33Iz4Dz.NhpRLterElGST3Aex3WvWxupA0X.knsDIS3oFK",
+		"is_active": true,
+		"is_superuser": false,
+		"is_verified": false
+	},
+	{
+		"id": 12,
+		"email": "luctus.ipsum.leo@icloud.couk",
+		"hashed_password": "dadasafqqrqqrqfasr",
+		"is_active": true,
+		"is_superuser": false,
+		"is_verified": false
+	},
+	{
+		"id": 13,
+		"email": "et@icloud.ca",
+		"hashed_password": "dadasafqqrqqrqfasr",
+		"is_active": true,
+		"is_superuser": false,
+		"is_verified": false
+	},
+	{
+		"id": 14,
+		"email": "quisque.nonummy@outlook.com",
+		"hashed_password": "dadasafqqrqqrqfasr",
+		"is_active": true,
+		"is_superuser": false,
+		"is_verified": false
+	},
+		{
+		"id": 15,
+		"email": "test@test.com",
+		"hashed_password": "$2b$12$DHmftz4zrFUaBDiWV/uupOP3Su1MfKGQ/ObBSwQSMT5BzW6VoNshm",
+		"is_active": true,
+		"is_superuser": false,
+		"is_verified": false
+	}
+]
