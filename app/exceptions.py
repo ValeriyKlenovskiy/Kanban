@@ -87,3 +87,8 @@ class NoVerificationTokenForYourEmail(KanbanException):
 class AlreadyVerified(KanbanException):
     status_code = status.HTTP_409_CONFLICT
     detail = "Already Verified"
+
+class DeadlineBeforeAdding(KanbanException):
+    status_code = status.HTTP_409_CONFLICT
+    detail = "Deadline Before Adding"
+    HTTPException(status_code=status.HTTP_409_CONFLICT)

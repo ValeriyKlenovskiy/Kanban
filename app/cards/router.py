@@ -5,7 +5,7 @@ from app.cards.dao import CardsDAO
 from app.cards.schemas import SCards
 from app.users.dependencies import get_current_user
 from app.users.models import Users
-from app.exceptions import NoList
+from app.exceptions import NoList, DeadlineBeforeAdding
 
 router = APIRouter(prefix="/cards", tags=["cards"])
 
@@ -17,6 +17,8 @@ async def get_cards():
 
 @router.post("")
 async def add_card(card_data: SCards, user: Users = Depends(get_current_user)):
+    if card_data.date_added>card_data.deadline:
+        raise DeadlineBeforeAdding
     try:
         return await CardsDAO.add_one(
             title=card_data.title,
